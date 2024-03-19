@@ -130,7 +130,8 @@ interface item {
             <Text>{ item.nome }</Text>
             <Text>{ item.preco }</Text>
             <Text>{ item.lista_ingredientes }</Text>
-            <Image source={require('')} />
+            <Image source={item.image} style={styles.imagePedido} />
+
             </TouchableOpacity>
         </View>
     );
@@ -221,8 +222,11 @@ const styles = StyleSheet.create({
 
     },
 
-    image: {
+    imagePedido: {
 
+        height: 150,
+        width: 140,
+        
     }
 
 
