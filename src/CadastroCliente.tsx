@@ -4,18 +4,21 @@ import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
 
 const CadastroProduto: React.FC = () => {
-    const [produtos, setProdutos] = useState<Produto[]>([]);
     const [nome, setNome] = useState <string>('');
-    const [preco, setPreco] = useState<string>('');
-    const [Ingredientes, setIngredientes ] = useState <string>('');
+    const [email, setEmail] = useState<string>('');
+    const [senha, setSenha] = useState<string>('');
+    const [telefone, setTelefone] = useState<string>('');
+    const [endereco, setEndereco ] = useState <string>('');
     const [imagem, setImagem] = useState<any>('');
 
-    const CadastroProduto = async () => { 
+    const CadastroCliente = async () => { 
         try{
         const formData = new FormData();
         formData.append('nome', nome);
-        formData.append('preco', preco);
-        formData.append('ingredientes', Ingredientes );
+        formData.append('email', email);
+        formData.append('senha', senha);
+        formData.append('telefone', telefone);
+        formData.append('endereco', endereco);
         formData.append('imagem', {
             uri: imagem, 
             type: 'image/jpeg',
@@ -77,41 +80,58 @@ const CadastroProduto: React.FC = () => {
         <View style={styles.container}>
             <StatusBar backgroundColor="red" barStyle= "light-content" />
             <View style={styles.header}>
-                <Text style={styles.headerText}>Top Food</Text>
+                <Text style={styles.headerText}>ℝ𝔼ℂ 𝕕𝕠𝕟𝕒𝕝𝕕'𝕤</Text>
             </View>
-            <View style={styles.form}>
-                <TextInput
-                style={styles.input}
-                placeholder="Nome Produto"
-                value={nome}
-                onChangeText={setNome}
-                />
-
-                <TextInput
-                style = {styles.input}
-                placeholder="Preço"
-                value={preco}
-                onChangeText={setPreco}
-                />
-                <TextInput
-                style = {styles.input}
-                placeholder="Ingredientes"
-                value={Ingredientes}
-                onChangeText={setIngredientes}
-                multiline />
-            
-
             <View style={styles.alinhamentoImagemSelecionada}>
                     {imagem ? <Image source={{ uri: imagem }} style={styles.imagemSelecionada} /> : null}
                 </View>
-            <TouchableOpacity style={styles.imageButton} onPress={selecionarImagem}>
-                <Text style={styles.imageButtonText}>Selecionar Imagem</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.imageButton} onPress={abrirCamera}>
+
+            <TouchableOpacity style={styles.imageButtonFoto} onPress={abrirCamera}>
                 <Text style={styles.imageButtonText}>Tirar Foto</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity style={styles.imageButtonSelecionar} onPress={selecionarImagem}>
+                <Text style={styles.imageButtonText}>Selecionar Imagem</Text>
+            </TouchableOpacity>
+            
+
+            <View style={styles.form}>
+                <TextInput
+                style={styles.input}
+                placeholder="Nome"
+                value={nome}
+                onChangeText={setNome}
+                />
+                <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={setEmail}
+                />
+                <TextInput
+                style = {styles.input}
+                placeholder="Senha"
+                value={senha}
+                onChangeText={setSenha}
+                />
+                <TextInput
+                style = {styles.input}
+                placeholder="Telefone"
+                value={telefone}
+                onChangeText={setTelefone}
+                />
+                <TextInput
+                style = {styles.input}
+                placeholder="Endereço"
+                value={endereco}
+                onChangeText={setEndereco}
+                multiline />
+            
+
+
+
             <TouchableOpacity style={styles.imageButton } onPress={CadastroProduto}>
-                <Text style={styles.imageButtonText}>Cadastrar Produto</Text>
+                <Text style={styles.imageButtonText}>Cadastrar </Text>
             </TouchableOpacity>
             </View >
 
@@ -120,17 +140,20 @@ const CadastroProduto: React.FC = () => {
 }
 const styles = StyleSheet.create({
     container: {
-        flex:1
+        flex:1,
+        backgroundColor: 'blue'
     },
 
     header: {
         backgroundColor: 'red',
+        alignItems: 'center',
+        paddingVertical: 20
 
     },
     headerText: {
-        fontSize: 20,
+        fontSize: 40,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'yellow'
 
     },
     form: {
@@ -148,12 +171,34 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
 
-    imageButton: {
-        backgroundColor: 'red',
+    imageButtonFoto: {
+        backgroundColor: 'orange',
         padding:10,
-        borderRadius: 5,
+        borderRadius: 50,
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop:20,
+
+    },
+
+    imageButtonSelecionar: {
+        backgroundColor: 'orange',
+        padding:10,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginBottom: 20,
+        marginTop:20,
+    },
+
+    imageButton: {
+        
+        backgroundColor: 'red',
+        padding:30,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginBottom: 10,
+        marginTop:20,
+
     },
     imageButtonText:{
         color: 'white',
@@ -172,7 +217,9 @@ const styles = StyleSheet.create({
     },
 
     alinhamentoImagemSelecionada:{
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 50,
+        
 
     },
 
