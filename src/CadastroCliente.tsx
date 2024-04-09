@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
 
-const CadastroProduto: React.FC = () => {
+const CadastroCliente: React.FC = () => {
     const [nome, setNome] = useState <string>('');
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
@@ -11,7 +11,7 @@ const CadastroProduto: React.FC = () => {
     const [endereco, setEndereco ] = useState <string>('');
     const [imagem, setImagem] = useState<any>('');
 
-    const CadastroCliente = async () => { 
+    const cadastrarCliente = async () => { 
         try{
         const formData = new FormData();
         formData.append('nome', nome);
@@ -25,12 +25,14 @@ const CadastroProduto: React.FC = () => {
             name: new Date() + '.jpg'
         });
 
-        const response = await axios.post('http://10.137.11.218:8000/api/produtos', formData, {
+        const response = await axios.post('http://10.137.11.218:8000/api/clientes', formData, {
             headers: {
                 'Content-Type':'multipart/form-data'
             }
         
         });
+
+        console.log(response.data)
     } catch (error) {
         console.log (error);
     }
@@ -77,14 +79,12 @@ const CadastroProduto: React.FC = () => {
         });
     };
     return (
+        <ScrollView>
         <View style={styles.container}>
             <StatusBar backgroundColor="red" barStyle= "light-content" />
             <View style={styles.header}>
                 <Text style={styles.headerText}>ℝ𝔼ℂ 𝕕𝕠𝕟𝕒𝕝𝕕'𝕤</Text>
             </View>
-            <View style={styles.alinhamentoImagemSelecionada}>
-                    {imagem ? <Image source={{ uri: imagem }} style={styles.imagemSelecionada} /> : null}
-                </View>
 
             <TouchableOpacity style={styles.imageButtonFoto} onPress={abrirCamera}>
                 <Text style={styles.imageButtonText}>Tirar Foto</Text>
@@ -93,6 +93,10 @@ const CadastroProduto: React.FC = () => {
             <TouchableOpacity style={styles.imageButtonSelecionar} onPress={selecionarImagem}>
                 <Text style={styles.imageButtonText}>Selecionar Imagem</Text>
             </TouchableOpacity>
+
+            <View style={styles.alinhamentoImagemSelecionada}>
+                    {imagem ? <Image source={{ uri: imagem }} style={styles.imagemSelecionada} /> : null}
+                </View>
             
 
             <View style={styles.form}>
@@ -130,18 +134,19 @@ const CadastroProduto: React.FC = () => {
 
 
 
-            <TouchableOpacity style={styles.imageButton } onPress={CadastroProduto}>
+            <TouchableOpacity style={styles.imageButton } onPress={cadastrarCliente}>
                 <Text style={styles.imageButtonText}>Cadastrar </Text>
             </TouchableOpacity>
             </View >
 
         </View>
+        </ScrollView>
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex:1,
-        backgroundColor: 'blue'
+        backgroundColor: 'white'
     },
 
     header: {
@@ -159,16 +164,26 @@ const styles = StyleSheet.create({
     form: {
         padding: 10,
         backgroundColor: '#f0f0f0',
-        marginBottom: 10
+        marginBottom: 10,
+        width:350,
+        borderRadius: 20,
+        marginRight:'auto',
+        marginLeft:'auto',
+
     },
 
     input: {
         height:40, 
         borderColor: 'gray',
-        borderWidth: 1,
+        borderWidth: 2,
         marginBottom: 10,
         paddingHorizontal: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        width:300,
+        marginRight:'auto',
+        marginLeft:'auto',
+
+
     },
 
     imageButtonFoto: {
@@ -177,7 +192,10 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         marginBottom: 10,
-        marginTop:20,
+        marginTop:10,
+        width:100,
+        marginRight:'auto',
+        marginLeft:'auto',
 
     },
 
@@ -185,19 +203,26 @@ const styles = StyleSheet.create({
         backgroundColor: 'orange',
         padding:10,
         borderRadius: 50,
-        alignItems: 'center',
         marginBottom: 20,
-        marginTop:20,
+        marginTop:10,
+        width:200,
+        marginRight:'auto',
+        marginLeft:'auto',
+        alignItems: 'center',
+
     },
 
     imageButton: {
         
         backgroundColor: 'red',
-        padding:30,
+        padding:20,
         borderRadius: 50,
         alignItems: 'center',
         marginBottom: 10,
+        width:200,
         marginTop:20,
+        marginRight:'auto',
+        marginLeft:'auto',
 
     },
     imageButtonText:{
@@ -233,9 +258,10 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
+        
     }
 
 
 })
 
-export default CadastroProduto;
+export default CadastroCliente;
