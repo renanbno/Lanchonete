@@ -8,6 +8,7 @@ const CadastroCliente: React.FC = () => {
     const [email, setEmail] = useState<string>('');
     const [senha, setSenha] = useState<string>('');
     const [telefone, setTelefone] = useState<string>('');
+    const [cpf, setCpf] = useState<string>('');
     const [endereco, setEndereco ] = useState <string>('');
     const [imagem, setImagem] = useState<any>('');
 
@@ -18,6 +19,7 @@ const CadastroCliente: React.FC = () => {
         formData.append('email', email);
         formData.append('senha', senha);
         formData.append('telefone', telefone);
+        formData.append('cpf', cpf);
         formData.append('endereco', endereco);
         formData.append('imagem', {
             uri: imagem, 
@@ -25,7 +27,7 @@ const CadastroCliente: React.FC = () => {
             name: new Date() + '.jpg'
         });
 
-        const response = await axios.post('http://10.137.11.218:8000/api/clientes', formData, {
+        const response = await axios.post('http://10.137.11.218:8000/api/CadastrarCliente', formData, {
             headers: {
                 'Content-Type':'multipart/form-data'
             }
@@ -124,6 +126,12 @@ const CadastroCliente: React.FC = () => {
                 value={telefone}
                 onChangeText={setTelefone}
                 />
+                <TextInput
+                style = {styles.input}
+                placeholder="CPF"
+                value={cpf}
+                onChangeText={setCpf}
+                multiline />
                 <TextInput
                 style = {styles.input}
                 placeholder="Endereço"

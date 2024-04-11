@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Image, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
+import { Image, ScrollView, StatusBar, StyleSheet, Text, TextInput, Touchable, TouchableOpacity, View } from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import axios from 'axios';
+import { Produto } from "../interface/ProdutoInterface";
 
 const CadastroProduto: React.FC = () => {
     const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -21,13 +22,14 @@ const CadastroProduto: React.FC = () => {
             type: 'image/jpeg',
             name: new Date() + '.jpg'
         });
-
-        const response = await axios.post('http://10.137.11.218:8000/api/produtos', formData, {
+        console.log(formData)
+        const response = await axios.post('http://10.137.11.218:8000/api/produto', formData, {
             headers: {
                 'Content-Type':'multipart/form-data'
             }
-        
+         
         });
+        console.log(response)
     } catch (error) {
         console.log (error);
     }
@@ -45,7 +47,7 @@ const CadastroProduto: React.FC = () => {
             if (response.didCancel) {
                 console.log('User cancelled camera');
             } else if (response.error) {
-                console.log('Camera Error: ', response.error);
+                console.log('Camera Error: ');
             } else {
                 let imageUri = response.uri || response.assets?.[0]?.uri;
                 setImagem(imageUri);
@@ -66,7 +68,7 @@ const CadastroProduto: React.FC = () => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             } else if (response.error) {
-                console.log('Image picker error: ', response.error);
+                console.log('Image picker error: ');
             } else {
                 let imageUri = response.uri || response.assets?.[0]?.uri;
                 setImagem(imageUri);
@@ -74,10 +76,14 @@ const CadastroProduto: React.FC = () => {
         });
     };
     return (
+        <ScrollView>
         <View style={styles.container}>
             <StatusBar backgroundColor="red" barStyle= "light-content" />
             <View style={styles.header}>
-                <Text style={styles.headerText}>Top Food</Text>
+                <Text style={styles.headerText}>ℝ𝔼ℂ 𝕕𝕠𝕟𝕒𝕝𝕕'𝕤</Text>
+            </View>
+            <View style={styles.tema}>
+                <Text style={styles.tema}>Cadastro do Produto:</Text>
             </View>
             <View style={styles.form}>
                 <TextInput
@@ -110,50 +116,80 @@ const CadastroProduto: React.FC = () => {
             <TouchableOpacity style={styles.imageButton} onPress={abrirCamera}>
                 <Text style={styles.imageButtonText}>Tirar Foto</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.imageButton } onPress={CadastroProduto}>
-                <Text style={styles.imageButtonText}>Cadastrar Produto</Text>
-            </TouchableOpacity>
             </View >
-
+            <TouchableOpacity style={styles.imageButton }>
+                <Text style={styles.imageButtonText} onPress={CadastroProduto}>Cadastrar Produto</Text>
+            </TouchableOpacity>
         </View>
+        </ScrollView>
     );
 }
 const styles = StyleSheet.create({
     container: {
-        flex:1
+        flex:1,
+        backgroundColor: 'white'
     },
 
     header: {
         backgroundColor: 'red',
+        alignItems: 'center',
+        paddingVertical: 20
 
     },
     headerText: {
-        fontSize: 20,
+        fontSize: 40,
         fontWeight: 'bold',
-        color: 'white',
+        color: 'yellow'
+
+    },
+
+    tema: {
+        fontSize: 25,
+        fontWeight: 'bold',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginRight:'auto',
+        marginLeft:'auto',
 
     },
     form: {
-        padding: 10,
+        padding: 20,
         backgroundColor: '#f0f0f0',
-        marginBottom: 10
+        marginBottom: 10,
+        width:350,
+        borderRadius: 20,
+        marginRight:'auto',
+        marginLeft:'auto',
+
     },
 
     input: {
         height:40, 
         borderColor: 'gray',
-        borderWidth: 1,
+        borderWidth: 2,
         marginBottom: 10,
         paddingHorizontal: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        width:300,
+        marginRight:'auto',
+        marginLeft:'auto',
+
+
     },
 
     imageButton: {
+        
         backgroundColor: 'red',
-        padding:10,
-        borderRadius: 5,
+        padding:20,
+        borderRadius: 50,
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        width:200,
+        marginTop:20,
+        marginRight:'auto',
+        marginLeft:'auto',
+
     },
     imageButtonText:{
         color: 'white',
@@ -172,7 +208,9 @@ const styles = StyleSheet.create({
     },
 
     alinhamentoImagemSelecionada:{
-        alignItems: 'center'
+        alignItems: 'center',
+        borderRadius: 50,
+        
 
     },
 
@@ -186,7 +224,11 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
+        
     }
+    
+
+    
 
 
 })
