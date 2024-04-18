@@ -15,7 +15,6 @@ import axios from "axios";
             <Text style={ styles.itemPreco}>{ item.preco }</Text>
             <Text style={ styles.itemIngrediente}>{ item.ingredientes }</Text>
             <Image source={item.imagem} style={styles.imagePedido} />
-           
             </View>
           
         </View>
@@ -59,6 +58,11 @@ import axios from "axios";
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 />
+                <TouchableOpacity style={styles.imageButton }>
+                <Text style={styles.imageButtonText} onPress={renderItem}>Cadastrar Produto</Text>
+                </TouchableOpacity>
+
+                
     
                 <View style={styles.footer}>
 
@@ -134,6 +138,7 @@ const styles = StyleSheet.create({
         height: 30
 
     },
+    
 
     imagePedido: {
 
@@ -180,7 +185,26 @@ const styles = StyleSheet.create({
         
         
 
-    }
+    },
+    imageButton: {
+        
+        backgroundColor: 'red',
+        padding:20,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginBottom: 10,
+        width:200,
+        marginTop:20,
+        marginRight:'auto',
+        marginLeft:'auto',
+
+    },
+    imageButtonText:{
+        color: 'white',
+        fontWeight: 'bold',
+
+
+    },
 
 
 
