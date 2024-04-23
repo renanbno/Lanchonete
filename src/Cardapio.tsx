@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import {  FlatList, Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Produto } from "./interface/ProdutoInterface";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
-
-    
 
     const renderItem = ({ item }: { item: Produto }) => (
         <TouchableOpacity>
@@ -45,6 +44,8 @@ import axios from "axios";
     
             fetchData();
         }, []);
+
+        const navigation = useNavigation();
         return (
             <View style={ styles.container}>
                 <StatusBar backgroundColor = "red" barStyle='light-content' />
@@ -59,19 +60,19 @@ import axios from "axios";
                 keyExtractor={(item) => item.id}
                 />
                 <TouchableOpacity style={styles.imageButton }>
-                <Text style={styles.imageButtonText} onPress={renderItem}>Cadastrar Produto</Text>
+                <Text>Adicionar no Carrinho</Text>
                 </TouchableOpacity>
 
                 
     
                 <View style={styles.footer}>
 
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('Cardapio')}>
                         <Image  source= {require ('./assets/images/menu.png')}
                         style={ styles.footerIcon}/>
                     </TouchableOpacity>
     
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('CadastroProduto')}>
                         <Image  source= {require ('./assets/images/home.png')}
                         style={ styles.footerIcon}/>
                     </TouchableOpacity>
